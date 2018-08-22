@@ -1,0 +1,30 @@
+PCA
+
+statquest PCA: https://www.youtube.com/watch?v=_U VHneBUBW0  
+
+• select the axis that preserves the maximum amount of variance, as it will most likely lose less  information than the other projections. 
+• This choice is that it is the axis that minimizes the mean squared distance between the original dataset and its projection onto that axis. Or maximizes the sum of squared distances from projected point to origin(#easierway)
+
+
+Principal Components 
+• The unit vector that defines the ith axis is called the ith principal component.
+• The direction of the PCs is not stable. However, they will generally still lie on the same axes.  
+Finding PCs of a training set 
+• A standard matrix factorization technique called Singular Value Decomposition (SVD) that can decompose the training set matrix X into the dot product of three matrices  
+• U· ? · VT,  
+• where VT contains all the principal components 
+• In python SVD is the function to obtain PCs. 
+• PCA assumes that the dataset is centered around the origin. As we will see, Scikit-Learn’s PCA classes take care of centering the data for you. 
+
+Principal Component Analysis (PCA) 
+Note:  • PCA assumes that the dataset is centered around the origin. As we will see, Scikit-Learn’s PCA classes take care of centering the data for you. • If you implement PCA yourself, or if you use other libraries, don’t forget to center the data first.  
+Python code :
+X_centered = X - X.mean(axis=0)   
+U, s, V = np.linalg.svd(X_centered)       
+c1 = V.T[:, 0]       c2 = V.T[:, 1] 
+
+
+
+
+Scree Plot to represent total variance
+
