@@ -1,8 +1,10 @@
+#cancerKM
+
 import pandas
 import numpy as np
 from sklearn.preprocessing import  StandardScaler
 from sklearn.model_selection import train_test_split, cross_val_score, cross_val_predict
-from sklearn.neighbors import KNeighborsClassifier
+from sklearn.decomposition import PCA
 from sklearn.metrics import accuracy_score, classification_report, confusion_matrix
 from sklearn.mixture import GaussianMixture
 from sklearn.cluster import KMeans
@@ -20,8 +22,6 @@ data = data.drop(data[data.Bare_Nuclei == '?'].index)
 
 print(data.shape)
 
-#print(data.info())
-
 data['Class'].replace(2,0,inplace = True)
 
 data['Class'].replace(4,1,inplace = True)
@@ -32,37 +32,27 @@ y = data['Class']
 
 x = data.drop(['ID','Class'],axis=1)
 
-X = StandardScaler().fit_transform(x.values)
+#X = StandardScaler().fit_transform(x.values)
 
-xtrain, xtest, ytrain, ytest = train_test_split(x,y,random_state = 7,test_size=0.2)
-
-knn = KNeighborsClassifier(n_neighbors=5)
-knn.fit(xtrain,ytrain)
-predict = knn.predict(xtest)
-predict2 = knn.predict(xtrain)
-
-#print(accuracy_score(predict,ytest))
-#print(accuracy_score(knn.predict(xtrain),ytrain))
-#print(classification_report(predict,ytest))
-#print(confusion_matrix(predict,ytest))
-
-#gmm = GaussianMixture()
-#gmm.fit(xtrain,ytrain)
-#predict2 = knn.predict(xtest)
-#print(accuracy_score(predict2,ytest))
-#print(classification_report(predict2,ytest))
-#print(confusion_matrix(predict2,ytest))
+#xtrain, xtest, ytrain, ytest = train_test_split(x,y,random_state = 7,test_size=0.2)
 
 kmeans = KMeans(n_clusters=2)
-kmeans.fit(xtrain)
-predict3 = kmeans.predict(xtest)
+k =kmeans.fit(x)
+#predict3 = kmeans.predict(x)
 
-print(accuracy_score(predict3,ytest))
-print(classification_report(predict3,ytest))
-print(confusion_matrix(predict3,ytest))
+pca = PCA(n_components = 2).fit(x) 
+pcadat = pca.fit_transform(x)
 
+print(sum(pca.explained_variance_ratio_))
+
+x1,y1 = zip(*pcadat)
+
+x1 = np.array(x1)
+y1 = np.array(y1)
+print(x1)
+print('y1',y1)
 #print(kmeans.labels_)
-plt.scatter(predict3,ytest)
+plt.scatter(x1,y1,c=k.labels_)
 plt.show()
 
 
