@@ -10,6 +10,7 @@ from sklearn.mixture import GaussianMixture
 from sklearn.cluster import KMeans
 import pylab as pl
 from matplotlib import pyplot as plt
+from mpl_toolkits.mplot3d import Axes3D
 
 
 file = r"F:\AKJ2\Machine Learning\datasets\breast_cancer.csv"
@@ -40,21 +41,32 @@ kmeans = KMeans(n_clusters=2)
 k =kmeans.fit(x)
 #predict3 = kmeans.predict(x)
 
-pca = PCA(n_components = 2).fit(x) 
+pca = PCA(n_components = 3).fit(x) 
 pcadat = pca.fit_transform(x)
 
 print(sum(pca.explained_variance_ratio_))
 
-x1,y1 = zip(*pcadat)
+x1,y1,z1 = zip(*pcadat)
 
 x1 = np.array(x1)
 y1 = np.array(y1)
-print(x1)
-print('y1',y1)
+z1 = np.array(z1)
+
+#print(x1)
+#print('y1',y1)
 #print(kmeans.labels_)
-plt.scatter(x1,y1,c=k.labels_)
+#plt.scatter(x1,y1,z1,c=k.labels_)
+#plt.show()
+
+fig = plt.figure()
+ax = fig.add_subplot(111, projection='3d')
+
+   # Plot the values
+ax.scatter(x1, y1, z1, c = k.labels_, marker='o')
+ax.set_xlabel('X-axis')
+ax.set_ylabel('Y-axis')
+ax.set_zlabel('Z-axis')
+
 plt.show()
-
-
 
 
