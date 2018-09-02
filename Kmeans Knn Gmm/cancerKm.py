@@ -57,6 +57,7 @@ print(len(labels))
 
 x2['Cluster'] = labels
 
+print("Method 1: Plottin Against 2 features")
 print('''
 sns.lmplot('Clump_Thickness', 'Uniformity_of_Cell_Size', 
            data=x2, 
@@ -68,7 +69,9 @@ plt.title('Clump_Thickness vs Uniformity_of_Cell_Size')
 plt.xlabel('Clump_Thickness')
 plt.ylabel('Uniformity_of_Cell_Size')
 plt.show()
+print("\n\n\n")
 ''')
+
 
 
 corr = x2.corr()
@@ -86,12 +89,12 @@ plt.show()
 
 
 
-
 pca = PCA(n_components = 3).fit(x) 
 pcadat = pca.fit_transform(x)
 
 print(sum(pca.explained_variance_ratio_))
 
+print("Method 2 plotting against 3 principal components :")
 x1,y1,z1 = zip(*pcadat)
 
 x1 = np.array(x1)
